@@ -2,7 +2,8 @@ package Aleksey.Plekhanov;
 
 class Tester {
 
-    static void testObject (int size, Runtime runtime, Class clazz) {
+    static void testObject (int size, Class clazz) {
+        Runtime runtime = Runtime.getRuntime();
         Object[] array;
         long mem1;
         long mem2;
