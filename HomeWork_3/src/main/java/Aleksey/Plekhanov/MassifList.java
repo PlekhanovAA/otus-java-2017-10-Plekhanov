@@ -1,29 +1,73 @@
 package Aleksey.Plekhanov;
 
 import java.util.*;
-
+@SuppressWarnings("unchecked")
 public class MassifList <T> implements List <T>{
 
     private static final int DEFAULT_SIZE = 2;
-    private static int currenrSize = DEFAULT_SIZE;
-    private static int index = 0;
+    private static int currentSize = DEFAULT_SIZE;
+    private static int size = 0;
     private T[] base;
 
     public MassifList (int size){
         base = (T[]) new Object[size];
+        currentSize = size;
     }
-    public MassifList (){
+    MassifList (){
         base = (T[]) new Object[DEFAULT_SIZE];
     }
 
     public int size() {
-        return index;
+        return size;
     }
 
     public boolean isEmpty() {
-        if (index == 0) return true;
-
+        if (size == 0) return true;
         return false;
+    }
+
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    public boolean add(Object o) {
+        if (size == currentSize) {
+            T[] temp;
+            temp = base.clone();
+            currentSize = (currentSize * 3)/2 + 1;
+            base = (T[]) new Object[currentSize];
+            System.arraycopy(temp,0,base,0,temp.length);
+        }
+        base[size] = (T)o;
+        size++;
+        return true;
+    }
+
+    private void rangeCheck(int index) {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+    }
+
+    public T get(int index) {
+        rangeCheck(index);
+        return base[index];
+    }
+
+    @Override
+    public T remove(int index) {
+        return null;
+    }
+
+    public Object set(int index, Object element) {
+        if (index >= 0 && index <= size) {
+            base[index] = (T)element;
+        }
+
+        return true;
+    }
+
+    public void sort (Comparator<? super T> c) {
+        Arrays.sort(base, 0, size, c);
     }
 
     public boolean contains(Object o) {
@@ -32,23 +76,6 @@ public class MassifList <T> implements List <T>{
 
     public Iterator iterator() {
         return null;
-    }
-
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    public boolean add(Object o) {
-        if (index ==  base.length) {
-            T[] temp = (T[])new Object[currenrSize];
-            temp = base.clone();
-            currenrSize = (currenrSize * 3)/2 + 1;
-            base = (T[]) new Object[currenrSize];
-            System.arraycopy(temp,0,base,0,temp.length);
-        }
-        base[index] = (T)o;
-        index++;
-        return true;
     }
 
     public boolean remove(Object o) {
@@ -65,23 +92,6 @@ public class MassifList <T> implements List <T>{
 
     public void clear() {
 
-    }
-
-    public T get(int index) {
-        return base[index];
-    }
-
-    @Override
-    public T remove(int index) {
-        return null;
-    }
-
-    public Object set(int index, Object element) {
-        if (index >= 0 && index <= this.index) {
-            base[index] = (T)element;
-        }
-
-        return true;
     }
 
     public void add(int index, Object element) {
