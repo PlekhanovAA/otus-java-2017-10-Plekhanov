@@ -4,16 +4,16 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class MassifList <T> implements List <T>{
 
-    private static final int DEFAULT_SIZE = 2;
-    private static int currentSize = DEFAULT_SIZE;
-    private static int size = 0;
+    private final int DEFAULT_SIZE = 2;
+    private int currentSize = DEFAULT_SIZE;
+    private int size = 0;
     private T[] base;
 
     public MassifList (int size){
         base = (T[]) new Object[size];
         currentSize = size;
     }
-    MassifList (){
+    public MassifList (){
         base = (T[]) new Object[DEFAULT_SIZE];
     }
 
@@ -23,7 +23,38 @@ public class MassifList <T> implements List <T>{
 
     public boolean isEmpty() {
         if (size == 0) return true;
+
         return false;
+    }
+
+    public void sort (Comparator<? super T> c) {
+        Arrays.sort(base, 0, size, c);
+    }
+
+    public boolean contains(Object o) {
+        return false;
+    }
+
+    public Iterator iterator() {
+        return new Iterator() {
+            private int currentPosition = 0;
+
+            public boolean hasNext() {
+                if (size >= base.length){
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public T next() {
+                return base[currentPosition++];
+            }
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     public Object[] toArray() {
@@ -48,6 +79,22 @@ public class MassifList <T> implements List <T>{
             throw new IndexOutOfBoundsException();
     }
 
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    public boolean addAll(Collection c) {
+        return false;
+    }
+
+    public boolean addAll(int index, Collection c) {
+        return false;
+    }
+
+    public void clear() {
+
+    }
+
     public T get(int index) {
         rangeCheck(index);
         return base[index];
@@ -64,34 +111,6 @@ public class MassifList <T> implements List <T>{
         }
 
         return true;
-    }
-
-    public void sort (Comparator<? super T> c) {
-        Arrays.sort(base, 0, size, c);
-    }
-
-    public boolean contains(Object o) {
-        return false;
-    }
-
-    public Iterator iterator() {
-        return null;
-    }
-
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    public boolean addAll(Collection c) {
-        return false;
-    }
-
-    public boolean addAll(int index, Collection c) {
-        return false;
-    }
-
-    public void clear() {
-
     }
 
     public void add(int index, Object element) {
