@@ -1,0 +1,54 @@
+-XX:+UseConcMarkSweepGC
+-XX:+UseParNewGC
+_________________________________________________________________________
+Collectors marked by Mon Nov 06 15:19:54 MSK 2017
+In minute:  (started Mon Nov 06 15:19:24 MSK 2017)
+Type: minor collector; count cleanup: 0; total time: 0 ms (0 s 0 ms)
+Type: major collector; count cleanup: 0; total time: 0 ms (0 s 0 ms)
+Total:  (started Mon Nov 06 15:16:53 MSK 2017)
+Type: minor collector; count cleanup: 8; total time: 1376 ms (1 s 376 ms)
+Type: major collector; count cleanup: 4; total time: 16714 ms (16 s 714 ms)
+Free memory: 250982472
+Total time: 180 sec.
+_________________________________________________________________________
+
+
+-XX:+UseParallelGC
+_________________________________________________________________________
+Collectors marked by Mon Nov 06 15:29:57 MSK 2017
+In minute:  (started Mon Nov 06 15:29:27 MSK 2017)
+Type: minor collector; count cleanup: 0; total time: 0 ms (0 s 0 ms)
+Type: major collector; count cleanup: 0; total time: 0 ms (0 s 0 ms)
+Total:  (started Mon Nov 06 15:26:54 MSK 2017)
+Type: minor collector; count cleanup: 4; total time: 508 ms (0 s 508 ms)
+Type: major collector; count cleanup: 1; total time: 3968 ms (3 s 968 ms)
+Free memory: 109005056
+Total time: 182 sec.
+_________________________________________________________________________
+
+-XX:+UseSerialGC
+_________________________________________________________________________
+Collectors marked by Mon Nov 06 15:34:42 MSK 2017
+In minute:  (started Mon Nov 06 15:34:12 MSK 2017)
+Type: minor collector; count cleanup: 0; total time: 0 ms (0 s 0 ms)
+Type: major collector; count cleanup: 0; total time: 0 ms (0 s 0 ms)
+Total:  (started Mon Nov 06 15:31:42 MSK 2017)
+Type: minor collector; count cleanup: 5; total time: 1273 ms (1 s 273 ms)
+Type: major collector; count cleanup: 1; total time: 117 ms (0 s 117 ms)
+Free memory: 111070936
+Total time: 180 sec.
+_________________________________________________________________________
+
+-XX:+UseG1GC
+_________________________________________________________________________
+Collectors marked by Mon Nov 06 15:38:49 MSK 2017
+In minute:  (started Mon Nov 06 15:38:19 MSK 2017)
+Type: minor collector; count cleanup: 0; total time: 0 ms (0 s 0 ms)
+Type: major collector; count cleanup: 0; total time: 0 ms (0 s 0 ms)
+Total:  (started Mon Nov 06 15:35:19 MSK 2017)
+Type: minor collector; count cleanup: 3; total time: 1684 ms (1 s 684 ms)
+Type: major collector; count cleanup: 1; total time: 322 ms (0 s 322 ms)
+Free memory: 261896680
+Total time: 210 sec.
+_________________________________________________________________________
+Starting the loop
