@@ -1,16 +1,9 @@
 package Aleksey.Plekhanov;
 
-import Aleksey.Plekhanov.annotations.Before;
-import Aleksey.Plekhanov.annotations.Test;
-
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class ReflectionHelper {
@@ -29,41 +22,6 @@ class ReflectionHelper {
             e.printStackTrace();
         }
         return null;
-    }
-
-    static Object getFieldValue(Object object, String name) {
-        Field field = null;
-        boolean isAccessible = true;
-        try {
-            field = object.getClass().getDeclaredField(name); //getField() for public fields
-            isAccessible = field.isAccessible();
-            field.setAccessible(true);
-            return field.get(object);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        } finally {
-            if (field != null && !isAccessible) {
-                field.setAccessible(false);
-            }
-        }
-        return null;
-    }
-
-    static void setFieldValue(Object object, String name, Object value) {
-        Field field = null;
-        boolean isAccessible = true;
-        try {
-            field = object.getClass().getDeclaredField(name); //getField() for public fields
-            isAccessible = field.isAccessible();
-            field.setAccessible(true);
-            field.set(object, value);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        } finally {
-            if (field != null && !isAccessible) {
-                field.setAccessible(false);
-            }
-        }
     }
 
     static Object callMethod(Object object, String name, Object... args) {
@@ -91,18 +49,13 @@ class ReflectionHelper {
         return classes.toArray(new Class<?>[classes.size()]);
     }
 
-    static Object getAnno (Object object) {
-        Class aClass = object.getClass();
-        return aClass.getAnnotation(Test.class);
+    static Annotation[] getAnnotations (Method method) {
+        return method.getDeclaredAnnotations();
     }
 
-    static Set<Method> getMethods (Object object, Class annotation) {
+    static Set<Method> getMethods (Class clazz) {
         Set<Method> result = new HashSet<>();
-        for (Method method : object.getClass().getDeclaredMethods()) {
-            if (method.getDeclaredAnnotation(annotation) != null)
-                result.add(method);
-
-        }
+        result.addAll(Arrays.asList(clazz.getDeclaredMethods()));
         return result;
     }
 }

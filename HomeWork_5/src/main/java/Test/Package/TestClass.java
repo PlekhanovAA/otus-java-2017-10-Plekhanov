@@ -1,4 +1,4 @@
-package Aleksey.Plekhanov;
+package Test.Package;
 
 import Aleksey.Plekhanov.annotations.After;
 import Aleksey.Plekhanov.annotations.Before;
