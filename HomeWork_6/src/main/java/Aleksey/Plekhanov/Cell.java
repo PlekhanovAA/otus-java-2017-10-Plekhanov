@@ -1,3 +1,5 @@
+package Aleksey.Plekhanov;
+
 public class Cell {
 
     private int count;
