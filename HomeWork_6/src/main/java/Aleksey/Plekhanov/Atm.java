@@ -14,19 +14,28 @@ public class Atm {
         this.cellFiveThousand = new Cell(count);
     }
 
-    public Cell getCellHundred() {
-        return cellHundred;
+    private int getCellHundredCount() {
+        return cellHundred.getCount();
     }
 
-    public Cell getCellFiveHundred() {
-        return cellFiveHundred;
+    private int getCellFiveHundredCount() {
+        return cellFiveHundred.getCount();
     }
 
-    public Cell getCellThousand() {
-        return cellThousand;
+    private int getCellThousandCount() {
+        return cellThousand.getCount();
     }
 
-    public Cell getCellFiveThousand() {
-        return cellFiveThousand;
+    private int getCellFiveThousandCount() {
+        return cellFiveThousand.getCount();
+    }
+
+    void getState (){
+        System.out.println("------- INFO -------");
+        System.out.println("Count of banknotes");
+        System.out.println(" 100 cost: " + getCellHundredCount() + " item");
+        System.out.println(" 500 cost: " + getCellFiveHundredCount() + " item");
+        System.out.println("1000 cost: " + getCellThousandCount() + " item");
+        System.out.println("5000 cost: " + getCellFiveThousandCount() + " item");
     }
 }
