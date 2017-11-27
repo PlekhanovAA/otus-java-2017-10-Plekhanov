@@ -1,41 +1,87 @@
 package Aleksey.Plekhanov;
 
-public class Atm {
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-    private Cell cellHundred;
-    private Cell cellFiveHundred;
-    private Cell cellThousand;
-    private Cell cellFiveThousand;
+class Atm {
 
-     Atm(int count) {
-        this.cellHundred = new Cell(count);
-        this.cellFiveHundred = new Cell(count);
-        this.cellThousand = new Cell(count);
-        this.cellFiveThousand = new Cell(count);
+    private static Map<Integer, Cell> allCells = new LinkedHashMap<>();
+
+    Atm(int count) {
+        for (Integer nominal : Banknotes.getAllBanknotes()) {
+            allCells.put(nominal, new Cell(count, nominal));
+        }
     }
 
-    private int getCellHundredCount() {
-        return cellHundred.getCount();
+    private int getVolume() {
+        int volume = 0;
+        for (Cell cell: allCells.values()) {
+            volume = volume + cell.getCount() * cell.getNominal();
+        }
+        return volume;
     }
 
-    private int getCellFiveHundredCount() {
-        return cellFiveHundred.getCount();
-    }
-
-    private int getCellThousandCount() {
-        return cellThousand.getCount();
-    }
-
-    private int getCellFiveThousandCount() {
-        return cellFiveThousand.getCount();
+    void printMenu() {
+        System.out.println("---------- MENU ---------");
+        System.out.println("1. State ATM;");
+        System.out.println("2. Receiving banknotes;");
+        System.out.println("3. Returning banknotes;");
+        System.out.println("4. Exit.");
     }
 
     void getState (){
-        System.out.println("------- INFO -------");
+        System.out.println("---------- INFO ---------");
         System.out.println("Count of banknotes");
-        System.out.println(" 100 cost: " + getCellHundredCount() + " item");
-        System.out.println(" 500 cost: " + getCellFiveHundredCount() + " item");
-        System.out.println("1000 cost: " + getCellThousandCount() + " item");
-        System.out.println("5000 cost: " + getCellFiveThousandCount() + " item");
+        for (Cell cell: allCells.values()) {
+            System.out.println(cell.getCountToString());
+        }
+    }
+
+    void printMenuReceiving() {
+        System.out.println("------- RECEIVING -------");
+        System.out.println("Choice nominal:");
+        for (Cell cell: allCells.values()) {
+            System.out.println(cell.getNominal());
+        }
+    }
+
+    void receiving(int nominal, int count) {
+        if (allCells.get(nominal) != null) {
+            allCells.get(nominal).addBanknotes(count);
+            System.out.println("OK");
+        } else {
+            System.out.println("Incorrect nominal");
+        }
+    }
+
+    void returning(int sum) {
+        if (sum > getVolume()) {
+            System.out.println("Not enough money");
+        } else {
+            Map<Integer, Integer> buffer = new LinkedHashMap<>();
+            for (Cell cell : allCells.values()) {
+                int countBanknotes = issuance(sum, cell);
+                buffer.put(cell.getNominal(), countBanknotes);
+                sum = sum - cell.getNominal() * countBanknotes;
+            }
+            if (sum == 0) {
+                System.out.println("OK");
+            } else {
+                System.out.println("Incorrect sum");
+                for (Integer nominal : buffer.keySet()) {
+                    allCells.get(nominal).addBanknotes(buffer.get(nominal));
+                }
+            }
+        }
+    }
+
+    private int issuance (int sum, Cell cell){
+        int countBanknotes = 0;
+        while (sum / cell.getNominal() > 0 & cell.getCount() > 0) {
+            countBanknotes++;
+            cell.removeBanknote();
+            sum = sum - cell.getNominal();
+        }
+        return countBanknotes;
     }
 }

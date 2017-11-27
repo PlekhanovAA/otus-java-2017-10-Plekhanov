@@ -1,18 +1,32 @@
 package Aleksey.Plekhanov;
 
-public class Cell {
+class Cell {
 
     private int count;
+    private int nominal;
 
-    Cell(int count) {
+    Cell(int count, int nominal) {
         this.count = count;
+        this.nominal = nominal;
     }
 
-    public int getCount() {
+    int getCount() {
         return count;
     }
 
-    public void addBanknotes (int count) {
+    int getNominal() {
+        return nominal;
+    }
+
+    void addBanknotes (int count) {
         this.count = this.count + count;
+    }
+
+    void removeBanknote () {
+        this.count = this.count - 1;
+    }
+
+    String getCountToString() {
+        return nominal + " cost: " + count + " item";
     }
 }
