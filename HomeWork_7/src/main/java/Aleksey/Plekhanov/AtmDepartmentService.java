@@ -71,7 +71,12 @@ class AtmDepartmentService {
         if (atms.isEmpty()) {
             System.out.println("ATMs missing.");
         }else {
-            System.out.println("Revert state all ATMs;");
+            int i = 1;
+            for (Atm atm : atms) {
+                System.out.println("Recycled ATM#" + i + ":");
+                atm.revert();
+                i++;
+            }
         }
     }
 }

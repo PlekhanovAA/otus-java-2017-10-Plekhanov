@@ -5,10 +5,12 @@ import java.util.Map;
 
 class Atm {
 
+    private int count;
     private Map<Integer, Cell> allCells = new LinkedHashMap<>();
 
     Atm(int count) {
         Banknotes.getAllBanknotes().forEach((k) -> allCells.put(k, new Cell(count, k)));
+        this.count = count;
     }
 
     int getVolume() {
@@ -72,4 +74,14 @@ class Atm {
             }
         }
     }
+
+   public void revert () {
+       for (Cell cell : allCells.values()) {
+           int addCount = count - cell.getCount();
+           if (addCount != 0) {
+               cell.addBanknotes(addCount);
+               System.out.println("Recycled " + addCount + " banknotes of " + cell.getNominal());
+           }
+       }
+   }
 }
