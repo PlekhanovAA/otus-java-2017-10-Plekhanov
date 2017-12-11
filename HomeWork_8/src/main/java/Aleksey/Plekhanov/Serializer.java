@@ -5,7 +5,7 @@ import java.util.*;
 
 class Serializer {
 
-    static String serialize (Object object) throws IllegalAccessException {
+    static String serialize (Object object) throws IllegalAccessException, InstantiationException {
         StringBuilder result  = new StringBuilder();
         result.append("{");
         Class clazz = object.getClass();
