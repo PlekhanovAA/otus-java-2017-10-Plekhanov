@@ -49,7 +49,6 @@ public class SerializerHelper {
         } else {
             for (int i = 0; i < arraySize; i++) {
                 Object obj = componentTypeArray.newInstance();
-                //Object obj = Array.get(field.get(object), i).getClass().newInstance();
                 array.append(Serializer.serialize(obj));
                 if (i != arraySize - 1) {
                     array.append(",");
@@ -70,11 +69,17 @@ public class SerializerHelper {
                 || type.equals(Integer.class)
                 || type.equals(int.class)
                 || type.equals(Short.class)
+                || type.equals(short.class)
                 || type.equals(Byte.class)
+                || type.equals(byte.class)
                 || type.equals(Float.class)
+                || type.equals(float.class)
                 || type.equals(Double.class)
+                || type.equals(double.class)
                 || type.equals(Character.class)
+                || type.equals(char.class)
                 || type.equals(Boolean.class)
+                || type.equals(boolean.class)
                 || type.equals(String.class)
                 || type.equals(Object.class)
                 || Collection.class.isAssignableFrom(type);
