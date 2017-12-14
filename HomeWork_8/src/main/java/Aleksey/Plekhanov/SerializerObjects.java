@@ -4,9 +4,9 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Collection;
 
-public class SerializerHelper {
+public class SerializerObjects {
 
-    static String serializeSimpleType(Field field, Object object) throws IllegalAccessException {
+    static String serializeFielsSimpleType(Field field, Object object) throws IllegalAccessException {
         String type = field.getType().getSimpleName();
         if (type.equals("String")) {
             return "\"" +
@@ -25,7 +25,7 @@ public class SerializerHelper {
         }
     }
 
-    static String serializeArray (Field field, Object object) throws IllegalAccessException, InstantiationException {
+    static String serializeFieldArrayType(Field field, Object object) throws IllegalAccessException, InstantiationException {
         StringBuilder array = new StringBuilder();
         int arraySize = Array.getLength(field.get(object));
         Class componentTypeArray = field.get(object).getClass().getComponentType();
@@ -49,7 +49,7 @@ public class SerializerHelper {
         } else {
             for (int i = 0; i < arraySize; i++) {
                 Object obj = componentTypeArray.newInstance();
-                array.append(Serializer.serialize(obj));
+                array.append(Serializer.serializeObject(obj));
                 if (i != arraySize - 1) {
                     array.append(",");
                 }
