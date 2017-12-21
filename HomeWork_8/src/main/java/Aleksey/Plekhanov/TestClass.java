@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 class TestClass {
-    private Integer a;
+    private int a;
     private String b;
     private int[] c;
-    private Boolean d;
+    private boolean d;
     private List list;
     private SimpleTestClass[] simpleTestClass;
 
@@ -35,4 +35,4 @@ class TestClass {
         }
         return result.toString();
     }
-}
+} 

@@ -3,8 +3,8 @@ package Aleksey.Plekhanov;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -14,43 +14,48 @@ public class Main {
         SimpleTestClass[] simpleTestClasses = new SimpleTestClass[2];
         simpleTestClasses[0] = new SimpleTestClass();
         simpleTestClasses[1] = new SimpleTestClass();
-        TestClass testClass = new TestClass(1, "Hello",  new int[]{-1, 0, 1}, true, list, simpleTestClasses);
+        TestClass testClass = new TestClass(1, "He\"llo",  new int[]{-1, 0, 1}, true, list, simpleTestClasses);
+        start(testClass);
 
-        System.out.println("My JSON for TestClass");
-        String myStr = IdentifierObjects.defineObject(testClass);
-        System.out.println("JSON object: " + myStr + "\n");
-
-        Gson gson = new Gson();
-        System.out.println("Gson JSON for TestClass");
-        String gsonStr = gson.toJson(testClass);
-        System.out.println("JSON object: " + gsonStr + "\n");
-
-        System.out.println("Gson deserialization myJSON for TestClass");
-        TestClass read = gson.fromJson(myStr, TestClass.class);
-        System.out.println(read.toString() + "\n");
-
-        System.out.println("My JSON for array int");
         int[] arrayInts = {1, 2, 3};
-        String myStrArrayInts = IdentifierObjects.defineObject(arrayInts);
-        System.out.println("JSON object: " + myStrArrayInts + "\n");
+        start(arrayInts);
 
-        System.out.println("Gson JSON for array int");
-        String gsonStrArrayInts = gson.toJson(arrayInts);
-        System.out.println("JSON object: " + gsonStrArrayInts + "\n");
+        String[] arrayStrings = {"a", "b"};
+        start(arrayStrings);
 
-        System.out.println("Gson deserialization myJSON for array int");
-        System.out.println(Arrays.toString(gson.fromJson(myStrArrayInts, arrayInts.getClass())) + "\n");
+        int integer = 123;
+        start(integer);
 
-        System.out.println("My JSON for array String");
-        String[] array = {"a", "b"};
-        String myStrArrayStrings = IdentifierObjects.defineObject(array);
-        System.out.println("JSON object: " + myStrArrayStrings + "\n");
-
-        System.out.println("Gson JSON for array String");
-        String gsonStrArrayStrings = gson.toJson(array);
-        System.out.println("JSON object: " + gsonStrArrayStrings + "\n");
-
-        System.out.println("Gson deserialization myJSON for array String");
-        System.out.println(Arrays.toString(gson.fromJson(myStrArrayStrings, array.getClass())) + "\n");
+        String string = "abc";
+        start(string);
     }
-}
+
+    private static void start(Object object) {
+        System.out.println("____________" + object.getClass().getCanonicalName() + "____________");
+        String myStr = IdentifierObjects.defineObject(object);
+        System.out.println("  My JSON:" + myStr);
+        Gson gson = new Gson();
+        System.out.println("Gson JSON:" + gson.toJson(object));
+        System.out.println("Gson deserialization my JSON:");
+        if (object.getClass().isArray()) {
+            System.out.println(Arrays.toString(convertToObjectArray(gson.fromJson(myStr, object.getClass()))));
+        }else {
+            System.out.println(gson.fromJson(myStr, object.getClass()) + "\n");
+        }
+    }
+
+    private static Object[] convertToObjectArray(Object array) {
+        Class ofArray = array.getClass().getComponentType();
+        if (ofArray.isPrimitive()) {
+            List ar = new ArrayList();
+            int length = Array.getLength(array);
+            for (int i = 0; i < length; i++) {
+                ar.add(Array.get(array, i));
+            }
+            return ar.toArray();
+        }
+        else {
+            return (Object[]) array;
+        }
+    }
+} 

@@ -1,7 +1,7 @@
-package Aleksey.Plekhanov;
+ package Aleksey.Plekhanov;
 
 class SimpleTestClass {
-    private Integer a = 1;
+    private int a = 1;
     private  String b = "a";
 
     @Override
@@ -11,4 +11,4 @@ class SimpleTestClass {
                 ", b='" + b + '\'' +
                 '}';
     }
-}
+} 
