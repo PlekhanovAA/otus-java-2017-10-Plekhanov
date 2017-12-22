@@ -28,20 +28,24 @@ public class Main {
 
         String string = "abc";
         start(string);
+
+        start(new A());
     }
 
     private static void start(Object object) {
-        System.out.println("____________" + object.getClass().getCanonicalName() + "____________");
-        String myStr = IdentifierObjects.defineObject(object);
+        System.out.println("____________" + object.getClass().getSimpleName() + "____________");
+        String myStr = Serializer.serialize(object);
         System.out.println("  My JSON:" + myStr);
         Gson gson = new Gson();
         System.out.println("Gson JSON:" + gson.toJson(object));
+
         System.out.println("Gson deserialization my JSON:");
         if (object.getClass().isArray()) {
             System.out.println(Arrays.toString(convertToObjectArray(gson.fromJson(myStr, object.getClass()))));
         }else {
             System.out.println(gson.fromJson(myStr, object.getClass()) + "\n");
         }
+
     }
 
     private static Object[] convertToObjectArray(Object array) {
@@ -58,4 +62,32 @@ public class Main {
             return (Object[]) array;
         }
     }
-} 
+
+    static class A{
+        int a = 0;
+        String str = "x\"yz";
+        B b = new B();
+
+        @Override
+        public String toString() {
+            return "A{" +
+                    "a=" + a +
+                    ", str='" + str + '\'' +
+                    ", b=" + b +
+                    '}';
+        }
+    }
+
+    static class B{
+        int aa = 654;
+        String bb = "9\"87";
+
+        @Override
+        public String toString() {
+            return "B{" +
+                    "aa=" + aa +
+                    ", bb='" + bb + '\'' +
+                    '}';
+        }
+    }
+}
