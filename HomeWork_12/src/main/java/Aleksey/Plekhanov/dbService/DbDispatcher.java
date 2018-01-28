@@ -1,17 +1,17 @@
-package Aleksey.Plekhanov.main;
+package Aleksey.Plekhanov.dbService;
 
 import Aleksey.Plekhanov.base.DBService;
 import Aleksey.Plekhanov.base.dataSets.AddressDataSet;
 import Aleksey.Plekhanov.base.dataSets.PhoneDataSet;
 import Aleksey.Plekhanov.base.dataSets.UserDataSet;
-import Aleksey.Plekhanov.dbService.DBServiceImpl;
 
 import java.util.List;
 
-public class Main {
+public class DbDispatcher {
+    static DBServiceImpl dbService;
 
-    public static void main(String[] args) throws InterruptedException {
-        DBService dbService = new DBServiceImpl();
+    public static void startDb() throws InterruptedException{
+        dbService = new DBServiceImpl();
         String status = dbService.getLocalStatus();
         System.out.println("Status: " + status);
         System.out.println("Cache size: " + dbService.getSizeCache());
@@ -29,17 +29,24 @@ public class Main {
         UserDataSet dataSet = dbService.read(1);
         System.out.println(dataSet);
 
-        dataSet = dbService.readByName("Aleksey");
+        dataSet = dbService.readByName("Notaleksey");
         System.out.println(dataSet);
 
         List<UserDataSet> dataSets = dbService.readAll();
         for (UserDataSet userDataSet : dataSets) {
             System.out.println(userDataSet);
         }
-        System.out.println("Cache size: " + dbService.getSizeCache());
-        dataSet = dbService.readByName("Notaleksey");
-        System.out.println(dataSet);
-        System.out.println("Cache size: " + dbService.getSizeCache());
-        dbService.shutdown();
+        Thread.sleep(1000);
+        //System.out.println("Cache size: " + dbService.getSizeCache());
+        //dbService.shutdown();
+    }
+
+    public int getSizeCache() {
+        return dbService.getSizeCache();
+    }
+
+
+    public static DBServiceImpl getDbService() {
+        return dbService;
     }
 }

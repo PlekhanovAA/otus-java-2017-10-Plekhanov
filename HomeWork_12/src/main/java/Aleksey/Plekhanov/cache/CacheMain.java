@@ -2,7 +2,7 @@ package Aleksey.Plekhanov.cache;
 
 public class CacheMain {
 
-    public static void main(String[] args) {
+    public static void CacheMain() {
         new CacheMain().softRefCacheExample();
     }
 
@@ -20,8 +20,8 @@ public class CacheMain {
             cache.get(i);
         }
 
-        System.out.println("Cache hits: " + cache.getHitCount());
-        System.out.println("Cache misses: " + cache.getMissCount());
+        //System.out.println("Cache hits: " + cache.getHitCount());
+        //System.out.println("Cache misses: " + cache.getMissCount());
 
         cache.dispose();
     }

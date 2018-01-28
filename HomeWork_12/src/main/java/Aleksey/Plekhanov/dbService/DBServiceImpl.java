@@ -65,6 +65,10 @@ public class DBServiceImpl implements DBService {
         return cache.getSize();
     }
 
+    public int getMiss() {
+        return cache.getMissCount();
+    }
+
     public void save(UserDataSet dataSet) {
         try (Session session = sessionFactory.openSession()) {
             UserDataSetDAO dao = new UserDataSetDAO(session);
