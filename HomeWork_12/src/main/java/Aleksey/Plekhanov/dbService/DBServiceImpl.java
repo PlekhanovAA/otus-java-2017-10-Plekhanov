@@ -23,7 +23,7 @@ public class DBServiceImpl implements DBService {
     private final SessionFactory sessionFactory;
     private final CacheEngine<Long, UserDataSet> cache = new CacheEngineImpl<>(10,1000, 1000,true);
 
-    public DBServiceImpl() {
+    DBServiceImpl() {
         Configuration configuration = new Configuration();
 
         configuration.addAnnotatedClass(UserDataSet.class);
@@ -67,6 +67,10 @@ public class DBServiceImpl implements DBService {
 
     public int getMiss() {
         return cache.getMissCount();
+    }
+
+    public int getHit() {
+        return cache.getHitCount();
     }
 
     public void save(UserDataSet dataSet) {
@@ -120,6 +124,7 @@ public class DBServiceImpl implements DBService {
     }
 
     public void shutdown() {
+        cache.dispose();
         sessionFactory.close();
     }
 

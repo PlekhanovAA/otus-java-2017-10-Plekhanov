@@ -20,13 +20,16 @@ public class AdminServlet  extends HttpServlet {
         Map<String, Object> pageVariables = new HashMap<>();
         DBServiceImpl dbService = DbDispatcher.getDbService();
         pageVariables.put("missCount", dbService.getMiss());
+        pageVariables.put("hitCount", dbService.getHit());
+        pageVariables.put("size", dbService.getSizeCache());
         String login = (String) request.getSession().getAttribute(LoginServlet.LOGIN_PARAMETER_NAME);
         pageVariables.put("login", login != null ? login : DEFAULT_USER_NAME);
+        dbService.shutdown();
         return pageVariables;
     }
 
     public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
+                      HttpServletResponse response) throws IOException {
 
         Map<String, Object> pageVariables = createPageVariablesMap(request);
 

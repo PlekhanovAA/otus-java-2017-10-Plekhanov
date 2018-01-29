@@ -10,8 +10,6 @@ public interface DBService {
 
     int getSizeCache();
 
-    int getMiss();
-
     void save(UserDataSet dataSet);
 
     UserDataSet read(long id);

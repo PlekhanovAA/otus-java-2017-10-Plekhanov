@@ -1,6 +1,5 @@
 package Aleksey.Plekhanov.dbService;
 
-import Aleksey.Plekhanov.base.DBService;
 import Aleksey.Plekhanov.base.dataSets.AddressDataSet;
 import Aleksey.Plekhanov.base.dataSets.PhoneDataSet;
 import Aleksey.Plekhanov.base.dataSets.UserDataSet;
@@ -8,9 +7,9 @@ import Aleksey.Plekhanov.base.dataSets.UserDataSet;
 import java.util.List;
 
 public class DbDispatcher {
-    static DBServiceImpl dbService;
+    private static DBServiceImpl dbService;
 
-    public static void startDb() throws InterruptedException{
+    public static void startDb() {
         dbService = new DBServiceImpl();
         String status = dbService.getLocalStatus();
         System.out.println("Status: " + status);
@@ -36,15 +35,7 @@ public class DbDispatcher {
         for (UserDataSet userDataSet : dataSets) {
             System.out.println(userDataSet);
         }
-        Thread.sleep(1000);
-        //System.out.println("Cache size: " + dbService.getSizeCache());
-        //dbService.shutdown();
     }
-
-    public int getSizeCache() {
-        return dbService.getSizeCache();
-    }
-
 
     public static DBServiceImpl getDbService() {
         return dbService;
