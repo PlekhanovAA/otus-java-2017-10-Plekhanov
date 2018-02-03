@@ -39,7 +39,6 @@ public class LoginServlet extends HttpServlet {
         String requestPass = request.getParameter(PASS_PARAMETER_NAME);
 
         if (requestLogin != null && requestLogin.equals("admin")&& requestPass.equals("pass")) {
-            saveToVariable(requestLogin);
             saveToSession(request, requestLogin);
             response.sendRedirect("admin");
         }
