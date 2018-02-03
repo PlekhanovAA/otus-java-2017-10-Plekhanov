@@ -3,6 +3,7 @@ package Aleksey.Plekhanov.dbService;
 import Aleksey.Plekhanov.base.dataSets.AddressDataSet;
 import Aleksey.Plekhanov.base.dataSets.PhoneDataSet;
 import Aleksey.Plekhanov.base.dataSets.UserDataSet;
+import Aleksey.Plekhanov.cache.CacheInfo;
 
 import java.util.List;
 
@@ -13,18 +14,18 @@ public class DbDispatcher {
         dbService = new DBServiceImpl();
         String status = dbService.getLocalStatus();
         System.out.println("Status: " + status);
-        System.out.println("Cache size: " + dbService.getSizeCache());
+        System.out.println("Cache size: " + dbService.getSize());
 
         UserDataSet aleksey = new UserDataSet("Aleksey", new AddressDataSet("AStreet"));
         aleksey.getPhones().add(new PhoneDataSet("1-111111", aleksey));
         aleksey.getPhones().add(new PhoneDataSet("1-222222", aleksey));
         dbService.save(aleksey);
-        System.out.println("Cache size: " + dbService.getSizeCache());
+        System.out.println("Cache size: " + dbService.getSize());
         UserDataSet notaleksey = new UserDataSet("Notaleksey", new AddressDataSet("NAStreet"));
         notaleksey.getPhones().add(new PhoneDataSet("2-111111", notaleksey));
         notaleksey.getPhones().add(new PhoneDataSet("2-222222", notaleksey));
         dbService.save(notaleksey);
-        System.out.println("Cache size: " + dbService.getSizeCache());
+        System.out.println("Cache size: " + dbService.getSize());
         UserDataSet dataSet = dbService.read(1);
         System.out.println(dataSet);
 
@@ -35,9 +36,10 @@ public class DbDispatcher {
         for (UserDataSet userDataSet : dataSets) {
             System.out.println(userDataSet);
         }
+        dbService.shutdown();
     }
 
-    public static DBServiceImpl getDbService() {
+    public static CacheInfo getCacheService() {
         return dbService;
     }
 }

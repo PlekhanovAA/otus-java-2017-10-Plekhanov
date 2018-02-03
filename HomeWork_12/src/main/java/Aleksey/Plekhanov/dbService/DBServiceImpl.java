@@ -6,6 +6,7 @@ import Aleksey.Plekhanov.base.dataSets.PhoneDataSet;
 import Aleksey.Plekhanov.base.dataSets.UserDataSet;
 import Aleksey.Plekhanov.cache.CacheEngine;
 import Aleksey.Plekhanov.cache.CacheEngineImpl;
+import Aleksey.Plekhanov.cache.CacheInfo;
 import Aleksey.Plekhanov.cache.MyCacheElement;
 import Aleksey.Plekhanov.dbService.dao.UserDataSetDAO;
 import org.hibernate.Session;
@@ -18,7 +19,7 @@ import org.hibernate.service.ServiceRegistry;
 import java.util.List;
 import java.util.function.Function;
 
-public class DBServiceImpl implements DBService {
+public class DBServiceImpl implements DBService, CacheInfo {
 
     private final SessionFactory sessionFactory;
     private final CacheEngine<Long, UserDataSet> cache = new CacheEngineImpl<>(10,1000, 1000,true);
@@ -61,7 +62,7 @@ public class DBServiceImpl implements DBService {
         });
     }
 
-    public int getSizeCache() {
+    public int getSize() {
         return cache.getSize();
     }
 

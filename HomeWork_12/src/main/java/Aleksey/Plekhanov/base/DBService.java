@@ -8,8 +8,6 @@ public interface DBService {
 
     String getLocalStatus();
 
-    int getSizeCache();
-
     void save(UserDataSet dataSet);
 
     UserDataSet read(long id);

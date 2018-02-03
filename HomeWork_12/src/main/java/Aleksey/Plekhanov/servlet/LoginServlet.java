@@ -40,9 +40,7 @@ public class LoginServlet extends HttpServlet {
 
         if (requestLogin != null && requestLogin.equals("admin")&& requestPass.equals("pass")) {
             saveToVariable(requestLogin);
-            saveToSession(request, requestLogin); //request.getSession().getAttribute("login");
-            saveToServlet(request, requestLogin); //request.getAttribute("login");
-            saveToCookie(response, requestLogin); //request.getCookies();
+            saveToSession(request, requestLogin);
             response.sendRedirect("admin");
         }
 
