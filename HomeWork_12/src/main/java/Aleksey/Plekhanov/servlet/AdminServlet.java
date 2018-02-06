@@ -22,7 +22,7 @@ public class AdminServlet extends HttpServlet {
         CacheInfo cacheInfo = DbDispatcher.getCacheService();
         pageVariables.put("missCount", cacheInfo.getMiss());
         pageVariables.put("hitCount", cacheInfo.getHit());
-        pageVariables.put("size", cacheInfo.getSize());
+        pageVariables.put("size", cacheInfo.getCacheSize());
         String login = (String) request.getSession().getAttribute(LoginServlet.LOGIN_PARAMETER_NAME);
         pageVariables.put("login", login != null ? login : DEFAULT_USER_NAME);
 
@@ -32,12 +32,14 @@ public class AdminServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
 
-        Map<String, Object> pageVariables = createPageVariablesMap(request);
-        if (!pageVariables.get("login").equals("admin")) {
+        String login = (String) request.getSession().getAttribute(LoginServlet.LOGIN_PARAMETER_NAME);
+        if (login == null || !login.equals("admin")) {
             response.sendRedirect("login");
         }
-        response.getWriter().println(TemplateProcessor.instance().getPage(ADMIN_PAGE_TEMPLATE, pageVariables));
 
+        Map<String, Object> pageVariables = createPageVariablesMap(request);
+
+        response.getWriter().println(TemplateProcessor.instance().getPage(ADMIN_PAGE_TEMPLATE, pageVariables));
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
     }

@@ -62,7 +62,7 @@ public class DBServiceImpl implements DBService, CacheInfo {
         });
     }
 
-    public int getSize() {
+    public int getCacheSize() {
         return cache.getSize();
     }
 
