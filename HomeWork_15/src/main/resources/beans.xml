@@ -1,0 +1,39 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="messageSystem" class="Aleksey.Plekhanov.messageSystem.MessageSystem">
+    </bean>
+
+    <bean id="dbAddress" class="Aleksey.Plekhanov.messageSystem.Address">
+        <constructor-arg name="id" value="DB"/>
+    </bean>
+
+    <bean id="frontAddress" class="Aleksey.Plekhanov.messageSystem.Address">
+        <constructor-arg name="id" value="Frontend"/>
+    </bean>
+
+    <bean id="messageSystemContext" class="Aleksey.Plekhanov.app.MessageSystemContext">
+        <property name="messageSystem" ref="messageSystem"/>
+        <property name="frontAddress" ref="frontAddress"/>
+        <property name="dbAddress" ref="dbAddress"/>
+    </bean>
+
+    <bean id="cacheEngine" class="Aleksey.Plekhanov.cache.CacheEngineImpl">
+        <constructor-arg name="maxElements" value="10"/>
+        <constructor-arg name="lifeTimeMs" value="1000"/>
+        <constructor-arg name="idleTimeMs" value="1000"/>
+        <constructor-arg name="isEternal" value="true"/>
+    </bean>
+
+    <bean id="dbService" class="Aleksey.Plekhanov.dbService.DBServiceImpl" init-method="init">
+        <constructor-arg name="context" ref="messageSystemContext"/>
+        <constructor-arg name="address" ref="dbAddress"/>
+        <constructor-arg name="cache" ref="cacheEngine"/>
+    </bean>
+
+    <bean id="dbDispatcher" class="Aleksey.Plekhanov.dbService.DbDispatcher">
+    </bean>
+
+</beans>
